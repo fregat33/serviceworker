@@ -5,7 +5,8 @@ var form = $('#notification');
 var massage_id = $('#massage_id');
 var massage_row = $('#massage_row');
 var server_key = $('#server_key');
-var sender_id = $('#sender_id');
+var urlParams = new URLSearchParams(window.location.search);
+var sender_id = urlParams.has('sender_id') ? urlParams.get('sender_id') : '448358493027';
 
 var info = $('#info');
 var info_message = $('#info-message');
@@ -15,6 +16,10 @@ var alert_message = $('#alert-message');
 
 var input_body = $('#body');
 var timerId = setInterval(setNotificationDemoBody, 10000);
+
+firebase.initializeApp({
+    messagingSenderId: sender_id
+});
 
 function setNotificationDemoBody() {
     if (input_body.val().search(/^It's found today at \d\d:\d\d$/i) !== -1) {
@@ -150,10 +155,6 @@ if (
 
 
 function getToken() {
-    firebase.initializeApp({
-        messagingSenderId: sender_id.val()
-    });
-
     messaging.requestPermission()
         .then(function() {
             // Get Instance ID token. Initially this makes a network call, once retrieved
