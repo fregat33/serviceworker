@@ -80,7 +80,7 @@ if (
         event.preventDefault();
 
         var notification = {};
-        form.find('form input').each(function () {
+        form.find('input').each(function () {
             var input = $(this);
             notification[input.attr('name')] = input.val();
         });
